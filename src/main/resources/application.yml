@@ -1,0 +1,95 @@
+server:
+  max-http-header-size: 32KB
+  compression:
+    enabled: true
+    min-response-size: 1024
+    mime-types:
+      - image/png
+      - image/jpeg
+      - image/jpg
+      - text/html
+      - application/javascript
+      - text/css
+      - application/octet-stream
+      - application/json
+  servlet:
+    session:
+      cookie:
+        http-only: true
+    encoding:
+      force: true
+      charset: UTF-8
+spring:
+  main:
+    #允许名称相同的Bean后者覆盖前者
+    allow-bean-definition-overriding: true
+  resources:
+    add-mappings: false
+  task:
+    execution:
+      thread-name-prefix: tao-task-
+      pool:
+        core-size: 2
+        max-size: 50
+        queue-capacity: 10000
+    scheduling:
+      thread-name-prefix: tao-scheduling-
+      pool:
+        size: 5
+  jackson:
+    time-zone: Asia/Shanghai
+    date-format: yyyy-MM-dd HH:mm:ss
+    serialization:
+      fail_on_empty_beans: false
+  application:
+    name: @project.name@
+  mvc:
+    throw-exception-if-no-handler-found: true
+  profiles:
+    active: @profileActive@
+  servlet:
+    multipart:
+      max-request-size: 100MB
+      max-file-size: 100MB
+  aop:
+    proxy-target-class: true
+  datasource:
+    hikari:
+      auto-commit: true
+      connection-test-query: SELECT 1
+      connection-timeout: 30000
+      idle-timeout: 30000
+      max-lifetime: 1800000
+      maximum-pool-size: 500
+      minimum-idle: 5
+      pool-name: DatebookHikariCP
+    type: com.zaxxer.hikari.HikariDataSource
+mybatis-plus:
+  global-config:
+    banner: false
+    db-config:
+      id-type: auto
+      logic-delete-value: 1 # 逻辑已删除值(默认为 1)
+      logic-not-delete-value: 0 # 逻辑未删除值(默认为 0)
+      update-strategy: IGNORED #禁止修改此配置
+  mapper-locations: classpath*:**/mapping/*.xml
+  configuration:
+    jdbc-type-for-null: null
+    map-underscore-to-camel-case: true
+    cache-enabled: true
+    lazyLoadingEnabled: true
+    multipleResultSetsEnabled: true
+    call-setters-on-nulls: true
+  #声明mybatis-plus通用枚举
+  #typeEnumsPackage:
+#system:
+#  config:
+#    # security登录地址
+#    loginUrl: /auth/login
+#    # security退出地址
+#    logoutUrl: /auth/logout
+#    # 后端免认证接口 url
+#    anonUrl: /favicon.ico,/static/**,/captcha.jpg
+#    # 允许上传的格式
+#    allow-format: xls,xlsx,jpg,png,jpeg,bmp,pdf,doc,docs
+#
